@@ -42,8 +42,7 @@
                 <label>Products</label>
                 <select name="products[]" class="form-control" multiple>
                     <% for (let p of products) { %>
-                        <option value="<%= p.product_id %>">
-                            <%= p.name %>
+                        <option value="<%= p.product_id %>"><%= p.name %>
                         </option>
                         <% } %>
                 </select>

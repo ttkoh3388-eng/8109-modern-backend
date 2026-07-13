@@ -76,9 +76,7 @@ app.get('/customers/create', async function (req, res) {
     const [products] = await connection.query("SELECT * FROM Products ORDER BY name");
 
     res.render('customers/create', {
-        companies,
-        employees,
-        products
+        companies, employees, products
     });
 })
 
@@ -91,17 +89,26 @@ app.post('/customers/create', async function (req, res) {
         INSERT INTO Customers (first_name, last_name, email, company_id, employee_id)
             VALUES (?, ?, ?, ?, ?);
     `
-    await connection.execute(sql, [
+    const [results] = await connection.execute(sql, [
         req.body.first_name,
         req.body.last_name,
         req.body.email,
         req.body.company_id,
         req.body.employee_id
     ]);
+    // get the id of the newly created customer
+    const newCustomerId = results.insertId;
+
+    // products will be an array of products ids
+    // p will be the product id of each product that the user selected
+    if (Array.isArray(req.body.products)) {
+        for (let p of req.body.products) {
+            const sql = `INSERT INTO CustomerProduct (customer_id, product_id) VALUES (?, ?);`
+            await connection.execute(sql, [newCustomerId, p]);
+        }
+    }
 
     res.redirect('/customers');
-
-    res.send("Form received");
 })
 
 // confirm with the user if they want to delete
