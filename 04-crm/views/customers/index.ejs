@@ -17,8 +17,12 @@
                 <input type="text" name="last_name" class="form-control" value="<%= searchParams?.last_name || '' %>" />
             </div>
             <div>
-                <label>Email</label>
-                <input type="text" name="email" class="form-control" value="<%= searchParams?.email || '' %>" />
+                <label>Joined Before</label>
+                <input type="date" name="joined_before" class="form-control" />
+            </div>
+            <div>
+                <label>Joined After</label>
+                <input type="date" name="joined_after" class="form-control" />
             </div>
             <input type="submit" value="Search" class="btn btn-primary btn-sm mt-3 mb-3" />
         </form>
@@ -34,7 +38,7 @@
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Company</th>
-                    <th>Actions</th>
+                    <th>Date Joined</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,7 +57,7 @@
                             <%= c.Companies.name %>
                         </td>
                         <td>
-                            <%= c.Customers.created_at ? c.Customers.created_at.toISOString().split('T')[0] : 'N/A' %>
+                            <%= new Date(c.Customers.created_at).toLocaleString('en-GB') %>
                         </td>
                         <td>
                             <a href="/customers/<%= c.Customers.customer_id %>/update"

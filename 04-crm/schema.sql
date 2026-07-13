@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Customers (
     email VARCHAR(255),
     company_id INT NOT NULL,
     employee_id INT,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME NOT NULL DEFAULT NOW(),
     FOREIGN KEY (company_id) REFERENCES Companies(company_id),
     FOREIGN KEY (employee_id) REFERENCES Employees(employee_id) ON DELETE SET NULL
 );

@@ -1,5 +1,15 @@
 USE crm;
 
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE EmployeeProduct;
+TRUNCATE TABLE CustomerProduct;
+TRUNCATE TABLE Customers;
+TRUNCATE TABLE Products;
+TRUNCATE TABLE Employees;
+TRUNCATE TABLE Departments;
+TRUNCATE TABLE Companies;
+SET FOREIGN_KEY_CHECKS = 1;
+
 -- =========================
 -- Companies
 -- =========================
@@ -56,12 +66,12 @@ INSERT INTO Products (name, description) VALUES
 -- Each customer has EXACTLY ONE employee
 -- =========================
 INSERT INTO Customers (first_name, last_name, email, company_id, employee_id, created_at) VALUES
-('Andrew', 'Collins', 'andrew.collins@northbridge.com', 1, 1, CURRENT_TIMESTAMP),
-('Melissa', 'Turner', 'melissa.turner@northbridge.com', 1, 1, CURRENT_TIMESTAMP),
-('Robert', 'Kim', 'robert.kim@summitridge.com', 2, 2, CURRENT_TIMESTAMP),
-('Natalie', 'Brooks', 'natalie.brooks@summitridge.com', 2, 2, CURRENT_TIMESTAMP),
-('Ethan', 'Price', 'ethan.price@northbridge.com', 1, 3, CURRENT_TIMESTAMP),
-('Sophia', 'Lopez', 'sophia.lopez@summitridge.com', 2, 3, CURRENT_TIMESTAMP);
+('Andrew', 'Collins', 'andrew.collins@northbridge.com', 1, 1, '2020-01-01'),
+('Melissa', 'Turner', 'melissa.turner@northbridge.com', 1, 1, '2020-12-01'),
+('Robert', 'Kim', 'robert.kim@summitridge.com', 2, 2, '2021-12-01'),
+('Natalie', 'Brooks', 'natalie.brooks@summitridge.com', 2, 2, '2020-12-01'),
+('Ethan', 'Price', 'ethan.price@northbridge.com', 1, 3, '2024-12-01'),
+('Sophia', 'Lopez', 'sophia.lopez@summitridge.com', 2, 3, '2025-12-01');
 
 -- =========================
 -- Customer to Product (many-to-many)
