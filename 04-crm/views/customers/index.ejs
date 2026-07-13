@@ -1,13 +1,12 @@
 <%- contentFor('title') %>
-    All Custmers
+    All Customers
 
     <%- contentFor('body') %>
-        <h1>All Customers</h1>
-        <div>
-            <a class="btn btn-primary" href="/customers/create">Create New Customer</a>
-        </div>
-        <h2>Search</h2>
-        <form method="GET">
+
+    <h1>All Customers</h1>
+
+    <h2>Search</h2>
+        <form method="GET" class="mt-2 mb-2">
             <div>
                 <label>First Name</label>
                 <input type="text" name="first_name" class="form-control"
@@ -24,7 +23,10 @@
             <input type="submit" value="Search" class="btn btn-primary btn-sm mt-3 mb-3" />
         </form>
 
-
+        <h2>Found Customers</h2>
+        <div>
+            <a class="btn btn-primary" href="/customers/create">Create New Customer</a>
+        </div>
         <table class="table">
             <thead>
                 <tr>

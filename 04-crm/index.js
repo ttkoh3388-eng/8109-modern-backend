@@ -50,48 +50,46 @@ app.get('/', function (req, res) {
 
 app.get('/customers', async function (req, res) {
 
-    const firstName = req.query.first_name;
-    const lastName = req.query.last_name;
-    const email = req.query.email;
+    // extract out the user search terms from the form
+    const { first_name, last_name, email } = req.query;
 
-
+    // base query: return all customers
     let sql = `
         SELECT * FROM Customers
             JOIN Companies ON
                 Customers.company_id = Companies.company_id
-        WHERE 1
+                WHERE 1 
         `
-         const bindings = [];
-    // check if thwe user is searching by first name
-    if (firstName) {
-        sql += ' AND first_name LIKE ?';
-        bindings.push('%' + firstName + '%');
+    const bindings = [];
+
+    // check if the  user is searching by first name
+    if (first_name) {
+        sql += ' WHERE first_name LIKE ?';
+        bindings.push("%" + first_name + "%");
     }
 
-    if (lastName) {
+    if (last_name) {
         sql += ' AND last_name LIKE ?';
-        bindings.push('%' + lastName + '%');
+        bindings.push("%" + last_name + "%");
     }
 
     if (email) {
         sql += ' AND email LIKE ?';
-        bindings.push('%' + email + '%');
+        bindings.push("%" + email + "%");
     }
 
     sql += ' ORDER BY Customers.first_name, Customers.last_name';
 
- console.log('Executing sql: ${sql} with bindings: ${JSON.stringify(bindings)}');
-
+ console.log(`Executing sql: ${sql} with bindings: ${JSON.stringify(bindings)}`)
+    
     // connection.query takes in the SQL statement as parameter
     // and returns an array of two elements
     // index 0 is the results
     // index 1 is some metadata
-    const [customers] = await connection.query({
-        "sql": sql,
-        "nestTables": true
+    const [customers] = await connection.execute({
+        sql: sql,
+        nestTables: true
     }, bindings);
-    // res.send(responses[0]);
-    console.log(express.response[0])
     res.render('customers/index', {
         customers: customers,
         searchParams: req.query
