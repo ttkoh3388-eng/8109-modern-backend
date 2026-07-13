@@ -162,6 +162,17 @@ app.get('/customers/:customer_id/update', async function (req, res) {
 
 
 // one route to process the edit form
+app.post('/customers/:customer_id/update', async function (req, res) {
+    const { first_name, last_name, email, company_id, employee_id, product_ids } = req.body;
+    
+    const sql = `
+        UPDATE Customers
+        SET first_name = ?, last_name = ?, email = ?, company_id = ?, employee_id = ?
+        WHERE customer_id = ?;
+    `;
+    await connection.execute(sql, [first_name, last_name, email, company_id, employee_id,req.params.customer_id]);
+    res.redirect('/customers');
+})
 
 app.listen(3000, function () {
     console.log("Server started");
