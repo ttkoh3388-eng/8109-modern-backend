@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Employees (
     employee_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
-    department_id INT,
+    department_id INT NOT NULL,
     FOREIGN KEY (department_id) REFERENCES Departments(department_id)
 );
 
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS Customers (
     email VARCHAR(255),
     company_id INT NOT NULL,
     employee_id INT,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (company_id) REFERENCES Companies(company_id),
     FOREIGN KEY (employee_id) REFERENCES Employees(employee_id) ON DELETE SET NULL
 );

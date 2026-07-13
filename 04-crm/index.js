@@ -49,12 +49,39 @@ app.get('/', function (req, res) {
 
 
 app.get('/customers', async function (req, res) {
-    const sql = `
+
+    const firstName = req.query.first_name;
+    const lastName = req.query.last_name;
+    const email = req.query.email;
+
+
+    let sql = `
         SELECT * FROM Customers
             JOIN Companies ON
                 Customers.company_id = Companies.company_id
-        ORDER BY Customers.first_name, Customers.last_name
+        WHERE 1
         `
+         const bindings = [];
+    // check if thwe user is searching by first name
+    if (firstName) {
+        sql += ' AND first_name LIKE ?';
+        bindings.push('%' + firstName + '%');
+    }
+
+    if (lastName) {
+        sql += ' AND last_name LIKE ?';
+        bindings.push('%' + lastName + '%');
+    }
+
+    if (email) {
+        sql += ' AND email LIKE ?';
+        bindings.push('%' + email + '%');
+    }
+
+    sql += ' ORDER BY Customers.first_name, Customers.last_name';
+
+ console.log('Executing sql: ${sql} with bindings: ${JSON.stringify(bindings)}');
+
     // connection.query takes in the SQL statement as parameter
     // and returns an array of two elements
     // index 0 is the results
@@ -62,11 +89,12 @@ app.get('/customers', async function (req, res) {
     const [customers] = await connection.query({
         "sql": sql,
         "nestTables": true
-    });
+    }, bindings);
     // res.send(responses[0]);
     console.log(express.response[0])
     res.render('customers/index', {
-        customers: customers
+        customers: customers,
+        searchParams: req.query
     })
 })
 // one route to display the form
@@ -103,7 +131,7 @@ app.post('/customers/create', async function (req, res) {
     // p will be the product id of each product that the user selected
     if (Array.isArray(req.body.products)) {
         for (let p of req.body.products) {
-            const sql = `INSERT INTO CustomerProduct (customer_id, product_id) VALUES (?, ?);`
+            const sql = `INSERT INTO CustomerProduct (customer_id,   product_id) VALUES (?, ?);`
             await connection.execute(sql, [newCustomerId, p]);
         }
     }

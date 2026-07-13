@@ -55,13 +55,13 @@ INSERT INTO Products (name, description) VALUES
 -- Customers
 -- Each customer has EXACTLY ONE employee
 -- =========================
-INSERT INTO Customers (first_name, last_name, email, company_id, employee_id) VALUES
-('Andrew', 'Collins', 'andrew.collins@northbridge.com', 1, 1),
-('Melissa', 'Turner', 'melissa.turner@northbridge.com', 1, 1),
-('Robert', 'Kim', 'robert.kim@summitridge.com', 2, 2),
-('Natalie', 'Brooks', 'natalie.brooks@summitridge.com', 2, 2),
-('Ethan', 'Price', 'ethan.price@northbridge.com', 1, 3),
-('Sophia', 'Lopez', 'sophia.lopez@summitridge.com', 2, 3);
+INSERT INTO Customers (first_name, last_name, email, company_id, employee_id, created_at) VALUES
+('Andrew', 'Collins', 'andrew.collins@northbridge.com', 1, 1, CURRENT_TIMESTAMP),
+('Melissa', 'Turner', 'melissa.turner@northbridge.com', 1, 1, CURRENT_TIMESTAMP),
+('Robert', 'Kim', 'robert.kim@summitridge.com', 2, 2, CURRENT_TIMESTAMP),
+('Natalie', 'Brooks', 'natalie.brooks@summitridge.com', 2, 2, CURRENT_TIMESTAMP),
+('Ethan', 'Price', 'ethan.price@northbridge.com', 1, 3, CURRENT_TIMESTAMP),
+('Sophia', 'Lopez', 'sophia.lopez@summitridge.com', 2, 3, CURRENT_TIMESTAMP);
 
 -- =========================
 -- Customer to Product (many-to-many)

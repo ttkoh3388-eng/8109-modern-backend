@@ -1,42 +1,64 @@
 <%- contentFor('title') %>
-All Custmers
+    All Custmers
 
-<%- contentFor('body') %>
-<h1>All Customers</h1>
-<div>
-    <a class="btn btn-primary" href="/customers/create">Create New Customer</a>
-</div>
+    <%- contentFor('body') %>
+        <h1>All Customers</h1>
+        <div>
+            <a class="btn btn-primary" href="/customers/create">Create New Customer</a>
+        </div>
+        <h2>Search</h2>
+        <form method="GET">
+            <div>
+                <label>First Name</label>
+                <input type="text" name="first_name" class="form-control"
+                    value="<%= searchParams?.first_name || '' %>" />
+            </div>
+            <div>
+                <label>Last Name</label>
+                <input type="text" name="last_name" class="form-control" value="<%= searchParams?.last_name || '' %>" />
+            </div>
+            <div>
+                <label>Email</label>
+                <input type="text" name="email" class="form-control" value="<%= searchParams?.email || '' %>" />
+            </div>
+            <input type="submit" value="Search" class="btn btn-primary btn-sm mt-3 mb-3" />
+        </form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Company</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% for (let c of customers) { %>
-            <tr>
-                <td>
-                    <%= c.Customers.first_name %>
-                </td>
-                <td>
-                    <%= c.Customers.last_name %>
-                </td>
-                <td>
-                    <%= c.Customers.email %>
-                </td>
-                <td>
-                    <%= c.Companies.name %>
-                </td>
-                <td>
-                    <a href="/customers/<%= c.Customers.customer_id %>/update" class="btn btn-primary">Update</a>
-                    <a href="/customers/<%= c.Customers.customer_id %>/delete" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
-            <% } %>
-    </tbody>
-</table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let c of customers) { %>
+                    <tr>
+                        <td>
+                            <%= c.Customers.first_name %>
+                        </td>
+                        <td>
+                            <%= c.Customers.last_name %>
+                        </td>
+                        <td>
+                            <%= c.Customers.email %>
+                        </td>
+                        <td>
+                            <%= c.Companies.name %>
+                        </td>
+                        <td>
+                            <%= c.Customers.created_at ? c.Customers.created_at.toISOString().split('T')[0] : 'N/A' %>
+                        </td>
+                        <td>
+                            <a href="/customers/<%= c.Customers.customer_id %>/update"
+                                class="btn btn-primary">Update</a>
+                            <a href="/customers/<%= c.Customers.customer_id %>/delete" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
